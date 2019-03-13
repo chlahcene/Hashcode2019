@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define INF 99999999
+char TEST='A' ;
+int bestMaxTest=1000;
 // list photo format du file
 vector<pair<char,vector<string>>> listPhoto;
 void readFile(const char namefile[]);
@@ -84,18 +86,68 @@ struct album{
 };
 // album
 album alb;
-void solveA();
-void solveB();
-void solveC();
-void solveD();
-void solveE();
-int penalityA(slideshow &s1,slideshow &s2);
+void solve();
+void solve1();
+int penality(slideshow &s1,slideshow &s2);
 int penalityB(slideshow &s1,slideshow &s2);
 int penalityC(slideshow &s1,slideshow &s2);
 int penalityD(slideshow &s1,slideshow &s2);
 int penalityE(slideshow &s1,slideshow &s2);
 int main(){
-    solveC();
+/*
+    // test A
+    TEST='A'; 
+    bestMaxTest = 2; 
+    cerr<<"****** test A *******"<<endl;
+    cerr<<"Read from file ..."<<endl;
+    readFile("inputs/a_example.txt");
+    solve();
+    cerr<<"writing sur file outputs/A ..."<<endl;
+    writeAlbum("outputs/A");
+    cerr<<"end trait test A"<<endl;
+    cerr<<"********** score is "<<alb.score<<" ************"<<endl;
+    cerr<<endl;
+*/
+/*
+    // test C
+    TEST='C'; 
+    bestMaxTest = 1000; 
+    cerr<<"****** test C *******"<<endl;
+    cerr<<"Read from file ..."<<endl;
+    readFile("inputs/c_memorable_moments.txt");
+    solve();
+    cerr<<"writing sur file outputs/C ..."<<endl;
+    writeAlbum("outputs/C");
+    cerr<<"end trait test C"<<endl;
+    cerr<<"********** score is "<<alb.score<<" ************"<<endl;
+    cerr<<endl;
+*/
+/*
+    // test D
+    TEST='D';
+    bestMaxTest = 1; 
+    cerr<<"****** test D *******"<<endl;
+    cerr<<"Read from file ..."<<endl;
+    readFile("inputs/d_pet_pictures.txt");
+    solve();
+    cerr<<"writing sur file outputs/D ..."<<endl;
+    writeAlbum("outputs/D");
+    cerr<<"end trait test D"<<endl;
+    cerr<<"********** score is "<<alb.score<<" ************"<<endl;
+    cerr<<endl;
+*/
+    // test E
+    TEST='E';
+    bestMaxTest = 1; 
+    cerr<<"****** test E *******"<<endl;
+    cerr<<"Read from file ..."<<endl;
+    readFile("inputs/e_shiny_selfies.txt");
+    solve1();
+    cerr<<"writing sur file outputs/E ..."<<endl;
+    writeAlbum("outputs/E");
+    cerr<<"end trait test E"<<endl;
+    cerr<<"********** score is "<<alb.score<<" ************"<<endl;
+    cerr<<endl;
     return 0;
 }
 void readFile(const char namefile[]){
@@ -168,85 +220,7 @@ bool comparPhotoSize(int i,int j){
      **/
     return (photos[i].tags).size()<(photos[j].tags).size();
 }
-void solveA(){
-    /**
-     * scors 2
-     * test A have 
-     * 4 photo --> 2 H and 2 V
-     **/
-    cerr<<"****** test A *******"<<endl;
-    cerr<<"Read from file ..."<<endl;
-    readFile("inputs/a_example.txt");
-    initHache();
-    // creer des photos from donnes de file
-    cerr<<"Creer Photos ..."<<endl;
-    createPhotos();
-    // sort list Photos selon number de tags
-    cerr<<"Sort Listes Photos ..."<<endl;
-    sort(indexPhotosH.begin(),indexPhotosH.end(),comparPhotoSize);
-    cerr<<"Choice the Slides ..."<<endl;
-    // number of the slides
-    int numberSlides=indexPhotosH.size()+indexPhotosH.size()/2;
-    // vector for savoir si on a utiliser un photos 
-    vector<bool> use(photos.size(),false);
-    // vector for les slides , 2*numberSlides pour que on peut ajout left et a right
-    vector<slideshow> slides(2*numberSlides);
-    int left=numberSlides,right = numberSlides;
-    // add first photos H
-    slides[left] = slideshow(photos[indexPhotosV[0]],photos[indexPhotosV[1]]);
-    // on a utiliser 2 photo V
-    use[indexPhotosV[0]] = true;
-    use[indexPhotosV[1]] = true;
-    for(int i=1;i<numberSlides;i++){
-        // inithilser penality a infinity
-        int minPenality = INF;
-        int indexPhoto = -1;
-        bool isleft = false;
-        for(int j:indexPhotosH){
-            if(use[j]) continue;
-            slideshow newSlide(photos[j]);
-            // test left 
-            int p = penalityA(slides[left],newSlide);
-            if(p<minPenality){
-                isleft = true;
-                minPenality = p;
-                indexPhoto = j;
-                slides[left-1] = newSlide;
-            }
-            // test right
-            p = penalityA(slides[right],newSlide);
-            if(p<minPenality){
-                isleft = false;
-                minPenality = p;
-                indexPhoto = j;
-                slides[right+1] = newSlide;
-            }            
-        }
-        use[indexPhoto] = true;
-        if(isleft){
-            // left
-            left--;
-        }else{
-            // right
-            right ++;
-        }
-    }
-    cerr<<"create Album ..."<<endl;
-    alb = album(slides,left,right);
-    cerr<<"writing sur file outputs/A ..."<<endl;
-    writeAlbum("outputs/A");
-    cerr<<"end trait test A"<<endl;
-    cerr<<"********** score is "<<alb.score<<" ************"<<endl;
-}
-void solveC(){
-    /**
-     * scors 2
-     * test A have 
-     * 4 photo --> 2 H and 2 V
-     **/
-    cerr<<"****** test C *******"<<endl;
-    cerr<<"Read from file ..."<<endl;
-    readFile("inputs/c_memorable_moments.txt");
+void solve(){
     initHache();
     // creer des photos from donnes de file
     cerr<<"Creer Photos ..."<<endl;
@@ -257,19 +231,37 @@ void solveC(){
     sort(indexPhotosV.begin(),indexPhotosV.end(),comparPhotoSize);
     cerr<<"Choice the Slides ..."<<endl;
     // number of the slides
-    int numberSlides=indexPhotosH.size()+indexPhotosH.size()/2;
+    int numberSlides=indexPhotosH.size()+indexPhotosV.size()/2;
     // vector for savoir si on a utiliser un photos 
     vector<bool> use(photos.size(),false);
     // vector for les slides , 2*numberSlides pour que on peut ajout left et a right
     vector<slideshow> slides(2*numberSlides);
     int left=numberSlides,right = numberSlides;
-    // add first photos H
-    slides[left] = slideshow(photos[indexPhotosH[0]]);
-    // on a utiliser photo H
-    use[indexPhotosH[0]] = true;
+    if(indexPhotosH.size()>0){
+        // add first photos H
+        slides[left] = slideshow(photos[indexPhotosH[0]]);
+        // on a utiliser photo H
+        use[indexPhotosH[0]] = true;
+    }else{
+        int minPenality = INF;
+        int indexPhoto = -1;
+        // add first photo V
+        for(int j:indexPhotosV){
+            if(j==indexPhotosV[0]) continue;
+            int p = lenghtIntersection(photos[indexPhotosV[0]].tags,photos[j].tags);
+            if(p<minPenality){
+                indexPhoto = j;
+                minPenality = p;
+            }
+        }
+        slides[left] = slideshow(photos[indexPhoto],photos[indexPhotosV[0]]);
+        use[indexPhotosV[0]] = true;
+        use[indexPhoto] = true;
+    }    
     for(int i=1;i<numberSlides;i++){
         cerr<<i<<"/"<<numberSlides<<endl;
         // inithilser penality a infinity
+        int test = 0;
         int minPenality = INF;
         int indexPhoto = -1,indexPhoto2 = -1;
         bool isleft = false;
@@ -279,7 +271,7 @@ void solveC(){
             if(use[j]) continue;
             slideshow newSlide(photos[j]);
             // test left 
-            int p = penalityC(slides[left],newSlide);
+            int p = penality(slides[left],newSlide);
             if(p<minPenality){
                 isleft = true;
                 minPenality = p;
@@ -287,7 +279,7 @@ void solveC(){
                 slides[left-1] = newSlide;
             }
             // test right
-            p = penalityC(slides[right],newSlide);
+            p = penality(slides[right],newSlide);
             if(p<minPenality){
                 isleft = false;
                 minPenality = p;
@@ -299,10 +291,11 @@ void solveC(){
         for(int j1:indexPhotosV){
             if(use[j1]) continue;
             for(int j2:indexPhotosV){
-                if(use[j2] || j1==j2) continue;
+                if(use[j2]) continue;
+                if (j1==j2) break;
                 slideshow newSlide(photos[j1],photos[j2]);
                 // test left 
-                int p = penalityC(slides[left],newSlide);
+                int p = penality(slides[left],newSlide);
                 if(p<minPenality){
                     isV = true;
                     isleft = true;
@@ -312,7 +305,7 @@ void solveC(){
                     slides[left-1] = newSlide;
                 }
                 // test right
-                p = penalityC(slides[right],newSlide);
+                p = penality(slides[right],newSlide);
                 if(p<minPenality){
                     isV = true;
                     isleft = false;
@@ -320,7 +313,10 @@ void solveC(){
                     indexPhoto = j1;
                     indexPhoto2 = j2;
                     slides[right+1] = newSlide;
-                }            
+                }
+                // max test avec V2
+                test++;
+                if(bestMaxTest==test) break;            
             }
         }
         use[indexPhoto] = true;
@@ -335,10 +331,136 @@ void solveC(){
     }
     cerr<<"create Album ..."<<endl;
     alb = album(slides,left,right);
-    cerr<<"writing sur file outputs/C ..."<<endl;
-    writeAlbum("outputs/C");
-    cerr<<"end trait test C"<<endl;
-    cerr<<"********** score is "<<alb.score<<" ************"<<endl;
+}
+void solve1(){
+    initHache();
+    // creer des photos from donnes de file
+    cerr<<"Creer Photos ..."<<endl;
+    createPhotos();
+    // sort list Photos selon number de tags
+    cerr<<"Sort Listes Photos ..."<<endl;
+    sort(indexPhotosH.begin(),indexPhotosH.end(),comparPhotoSize);
+    sort(indexPhotosV.begin(),indexPhotosV.end(),comparPhotoSize);
+    cerr<<"Choice the Slides ..."<<endl;
+    // number of the slides
+    int numberSlides=indexPhotosH.size()+indexPhotosV.size()/2;
+    // vector for savoir si on a utiliser un photos 
+    vector<bool> use(photos.size(),false);
+    // vector for les slides , 2*numberSlides pour que on peut ajout left et a right
+    vector<slideshow> slides(2*numberSlides);
+    int left=numberSlides,right = numberSlides;
+    if(indexPhotosH.size()>0){
+        // add first photos H
+        slides[left] = slideshow(photos[indexPhotosH[0]]);
+        // on a utiliser photo H
+        use[indexPhotosH[0]] = true;
+    }else{
+        int minPenality = INF;
+        int indexPhoto = -1;
+        // add first photo V
+        for(int j:indexPhotosV){
+            if(j==indexPhotosV[0]) continue;
+            int p = lenghtIntersection(photos[indexPhotosV[0]].tags,photos[j].tags);
+            if(p<minPenality){
+                indexPhoto = j;
+                minPenality = p;
+            }
+        }
+        slides[left] = slideshow(photos[indexPhoto],photos[indexPhotosV[0]]);
+        use[indexPhotosV[0]] = true;
+        use[indexPhoto] = true;
+    }
+    for(int i=1;i<numberSlides;i++){
+        cerr<<i<<"/"<<numberSlides<<endl;
+        // inithilser penality a infinity
+        int minPenality = INF;
+        int indexPhoto = -1,indexPhoto2 = -1;
+        bool isleft = false;
+        bool isV = false;
+        // photo horizontal
+        for(int j:indexPhotosH){
+            if(use[j]) continue;
+            slideshow newSlide(photos[j]);
+            // test left 
+            int p = penality(slides[left],newSlide);
+            if(p<minPenality){
+                isleft = true;
+                minPenality = p;
+                indexPhoto = j;
+                slides[left-1] = newSlide;
+            }
+            // test right
+            p = penality(slides[right],newSlide);
+            if(p<minPenality){
+                isleft = false;
+                minPenality = p;
+                indexPhoto = j;
+                slides[right+1] = newSlide;
+            }            
+        }
+        // photos vertical 1
+        int minPenalityVL = INF;
+        int minPenalityVR = INF;
+        int indexPhotoVL = -1,indexPhotoVR = -1;
+        bool isleftV = false;
+        for(int j:indexPhotosV){
+            if(use[j]) continue;
+            slideshow newSlide(photos[j]);
+            // test left 
+            int p = penality(slides[left],newSlide);
+            if(p<minPenalityVL){
+                minPenalityVL = p;
+                indexPhotoVL = j;
+            }
+            // test right
+            p = penality(slides[right],newSlide);
+            if(p<minPenalityVR){
+                minPenalityVR = p;
+                indexPhotoVR = j;
+            }            
+        }
+        // photos vertical 2
+        for(int j:indexPhotosV){
+            if(use[j]) continue;
+            if(j!=indexPhotoVL){
+                slideshow newSlide(photos[j],photos[indexPhotoVL]);
+                // test left 
+                int p = penality(slides[left],newSlide);
+                if(p<minPenality){
+                    isV = true;
+                    isleft = true;
+                    minPenality = p;
+                    indexPhoto = j;
+                    indexPhoto2 = indexPhotoVL;
+                    slides[left-1] = newSlide;
+                }
+            }
+            if(j!=indexPhotoVR){
+                slideshow newSlide(photos[j],photos[indexPhotoVR]);
+                // test right 
+                int p = penality(slides[right],newSlide);
+                if(p<minPenality){
+                    isV = true;
+                    isleft = false;
+                    minPenality = p;
+                    indexPhoto = j;
+                    indexPhoto2 = indexPhotoVR;
+                    slides[right+1] = newSlide;
+                }
+            }            
+        }        
+        use[indexPhoto] = true;
+        if(isV) use[indexPhoto2] = true;
+        if(isleft){
+            // left
+            left--;
+        }else{
+            // right
+            right ++;
+        }
+    }
+    cerr<<"create Album ..."<<endl;
+    alb = album(slides,left,right);
 }
 vector<int> unionVector(vector<int> &V1,vector<int> &V2){
     /**
@@ -424,7 +546,7 @@ void createPhotos(){
     }
 
 }
-int penalityA(slideshow &s1,slideshow &s2){
+int penality(slideshow &s1,slideshow &s2){
     return -1*interest(s1.tags,s2.tags);
 }
 int penalityB(slideshow &s1,slideshow &s2){
