@@ -1,0 +1,5 @@
+
+outputs/*.txt
+inputs/*.txt
+*.pdf
+main
