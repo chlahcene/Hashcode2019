@@ -5,8 +5,11 @@
  *      Ismail KHERBACH
  *      Youness MIMENE
  * 
+ * Test A
+ *      Score 2
+ *      time 0min 0s 20 ms
  * Test C 
- *      Score 1807
+ *      Score 1797
  *      time 0min 11s 179 ms
  * 
  ***/
@@ -102,6 +105,22 @@ int penality(slideshow &s1,slideshow &s2);
 inline unsigned long long get_time_in_ms();
 int main(){
     unsigned long long current_time, difference1;
+    current_time = get_time_in_ms();
+    // test A 
+    cerr<<"****** test A *******"<<endl;
+    cerr<<"Read from file ..."<<endl;
+    readFile("inputs/a_example.txt");
+    solve();
+    cerr<<"writing sur file outputs/A.txt ..."<<endl;
+    writeAlbum("outputs/A.txt");
+    cerr<<"end trait test A"<<endl;
+    cerr<<"********** score is "<<alb.score<<" ************"<<endl;
+    difference1 = get_time_in_ms() - current_time;
+    int minute=difference1/60000;
+    int sc = (difference1%60000)/1000;
+    int ms = difference1%1000;
+    cerr<<"********** time is "<<minute<<"min "<<sc<<"s "<<ms<<" ms ***********"<<endl;
+    cerr<<endl<<endl;    
     current_time = get_time_in_ms(); 
     // test C
     cerr<<"****** test C *******"<<endl;
@@ -113,9 +132,9 @@ int main(){
     cerr<<"end trait test C"<<endl;
     cerr<<"********** score is "<<alb.score<<" ************"<<endl;
     difference1 = get_time_in_ms() - current_time;
-    int minute=difference1/60000;
-    int sc = (difference1%60000)/1000;
-    int ms = difference1%1000;
+     minute=difference1/60000;
+     sc = (difference1%60000)/1000;
+     ms = difference1%1000;
     cerr<<"********** time is "<<minute<<"min "<<sc<<"s "<<ms<<" ms ***********"<<endl;
     cerr<<endl;
     return 0;
@@ -213,7 +232,7 @@ void solve(){
         // add first photos H
         slides[left] = slideshow(photos[indexPhotosH[0]]);
         // on a utiliser photo H
-        notUseIndexH.erase(notUseIndexH.begin());
+        notUseIndexH.erase(0);
     }else{
         int minPenality = INF;
         int indexPhoto = -1;
@@ -228,7 +247,7 @@ void solve(){
         }
         slides[left] = slideshow(photos[indexPhotosV[indexPhoto]],photos[indexPhotosV[0]]);
         notUseIndexV.erase(indexPhoto);
-        notUseIndexV.erase(notUseIndexV.begin());
+        notUseIndexV.erase(0);
     }
     cerr<<fixed<<setprecision(2);    
     for(int i=1;i<numberSlides;i++){
@@ -317,8 +336,8 @@ int interest(TypeTags &s1,TypeTags &s2){
      * interest entre s1 et s2
      **/
     int inter = lenghtIntersection(s1,s2);
-    int sizeS1=int(s1.size());
-    int sizeS2=int(s2.size());
+    int sizeS1=int(s1.count());
+    int sizeS2=int(s2.count());
     return min<int>({sizeS1-inter,sizeS1-inter,inter});
 }
 void createPhotos(){
