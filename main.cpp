@@ -5,6 +5,8 @@ char TEST='A' ;
 int bestMaxTest=1000;
 // list photo format du file
 vector<pair<char,vector<string>>> listPhoto;
+// vector adj for test B
+vector<vector<int>> adj;
 void readFile(const char namefile[]);
 void writeAlbum(const char namefile[]);
 // hacher ensemble tags 
@@ -36,6 +38,7 @@ vector<photo> photos;
 vector<int> indexPhotosH,indexPhotosV;
 void createPhotos();
 bool comparPhotoSize(int i,int j);
+bool comparPhotoInter(int i,int j);
 // struct slideshow
 struct slideshow{
     // 2 V or H
@@ -219,6 +222,12 @@ bool comparPhotoSize(int i,int j){
      * comparison selon size of tags
      **/
     return (photos[i].tags).size()<(photos[j].tags).size();
+}
+bool comparPhotoInter(int i,int j){
+    /**
+     * comparison selon size of intersection
+     **/
+    return (adj[i]).size()<(adj[j]).size();
 }
 void solve(){
     initHache();
@@ -461,6 +470,47 @@ void solve1(){
     }
     cerr<<"create Album ..."<<endl;
     alb = album(slides,left,right);
+}
+void solve2(){
+    // for test B
+    initHache();
+    // creer des photos from donnes de file
+    cerr<<"Creer Photos ..."<<endl;
+    createPhotos();
+    // create ensemble from the tags
+    int numberTags = ensembleTags.size();
+    vector<vector<int>> ensemblePhotos(numberTags);
+    for(int i:indexPhotosH){
+        for(int j:photos[i].tags){
+            ensemblePhotos[j].push_back(i);
+        }
+    }
+    // create graph of intersection
+    int numberPhotos = indexPhotosH.size();
+    adj.clear();
+    adj.assign(numberPhotos,vector<int>(0)); 
+    for(int i=0;i<numberTags;i++){
+        sort(begin(ensemblePhotos[i]),end(ensemblePhotos[i]));
+        for(int j:ensemblePhotos[i]){
+            adj[j] = unionVector(adj[j],ensemblePhotos[i]);
+        }
+    }
+    // erase i from adj[i]
+    for(int i=0;i<numberPhotos;i++){
+        auto it = find(begin(adj[i]),end(adj[i]),i);
+        if(it!=end(adj[i])) (adj[i]).erase(it);
+    }
+    // sort list Photos selon number de tags
+    cerr<<"Sort Listes Photos ..."<<endl;
+    sort(indexPhotosH.begin(),indexPhotosH.end(),comparPhotoInter);
+    for(int i=0;i<numberPhotos;i++){
+        sort(adj[i].begin(),adj[i].end(),comparPhotoInter);
+    }
+    cerr<<"Choice the Slides ..."<<endl;
+    
+    cerr<<"create Album ..."<<endl;
+
+//    alb = album(slides,left,right);
 }
 vector<int> unionVector(vector<int> &V1,vector<int> &V2){
     /**
