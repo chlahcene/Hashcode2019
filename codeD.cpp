@@ -1,3 +1,15 @@
+/***
+ * Team codebreak
+ *      Lahcene CHAKLALA
+ *      Baha eddine Bouchikhi
+ *      Ismail KHERBACH
+ *      Youness MIMENE
+ * 
+ * Test D 
+ *      Score 1807
+ *      time 0min 11s 179 ms
+ * 
+ ***/
 #include <bits/stdc++.h>
 using namespace std;
 #define INF 99999999
@@ -96,9 +108,9 @@ int main(){
     cerr<<"****** test D *******"<<endl;
     cerr<<"Read from file ..."<<endl;
     readFile("inputs/d_pet_pictures.txt");
-    solve();
-    cerr<<"writing sur file outputs/D ..."<<endl;
-    writeAlbum("outputs/D");
+    solve1();
+    cerr<<"writing sur file outputs/D.txt ..."<<endl;
+    writeAlbum("outputs/D.txt");
     cerr<<"end trait test D"<<endl;
     cerr<<"********** score is "<<alb.score<<" ************"<<endl;
  
@@ -355,7 +367,7 @@ void solve1(){
         // add first photos H
         slides[left] = slideshow(photos[indexPhotosH[0]]);
         // on a utiliser photo H
-        notUseIndexH.erase(notUseIndexH.begin());
+        notUseIndexH.erase(0);
     }else{
         int minPenality = INF;
         int indexPhoto = -1;
@@ -370,7 +382,7 @@ void solve1(){
         }
         slides[left] = slideshow(photos[indexPhotosV[indexPhoto]],photos[indexPhotosV[0]]);
         notUseIndexV.erase(indexPhoto);
-        notUseIndexV.erase(notUseIndexV.begin());
+        notUseIndexV.erase(0);
     }
     cerr<<fixed<<setprecision(2);    
     for(int i=1;i<numberSlides;i++){
@@ -386,6 +398,7 @@ void solve1(){
             // test left 
             int p = penality(slides[left],newSlide);
             if(p<minPenality){
+                isV = false;
                 isleft = true;
                 minPenality = p;
                 indexPhoto = j;
@@ -394,6 +407,7 @@ void solve1(){
             // test right
             p = penality(slides[right],newSlide);
             if(p<minPenality){
+                isV = false;
                 isleft = false;
                 minPenality = p;
                 indexPhoto = j;

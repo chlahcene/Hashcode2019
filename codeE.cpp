@@ -1,3 +1,15 @@
+/***
+ * Team codebreak
+ *      Lahcene CHAKLALA
+ *      Baha eddine Bouchikhi
+ *      Ismail KHERBACH
+ *      Youness MIMENE
+ * 
+ * Test E 
+ *      Score 1807
+ *      time 0min 11s 179 ms
+ * 
+ ***/
 #include <bits/stdc++.h>
 using namespace std;
 #define INF 99999999
@@ -97,8 +109,8 @@ int main(){
     cerr<<"Read from file ..."<<endl;
     readFile("inputs/e_shiny_selfies.txt");
     solve1();
-    cerr<<"writing sur file outputs/E ..."<<endl;
-    writeAlbum("outputs/E");
+    cerr<<"writing sur file outputs/E.txt ..."<<endl;
+    writeAlbum("outputs/E.txt");
     cerr<<"end trait test E"<<endl;
     cerr<<"********** score is "<<alb.score<<" ************"<<endl;
  
@@ -404,7 +416,6 @@ void solve1(){
         int minPenalityVL = INF;
         int minPenalityVR = INF;
         int indexPhotoVL = -1,indexPhotoVR = -1;
-        bool isleftV = false;
         for(int j:notUseIndexV){
             slideshow newSlide(photos[indexPhotosV[j]]);
             // test left 

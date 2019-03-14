@@ -1,3 +1,15 @@
+/***
+ * Team codebreak
+ *      Lahcene CHAKLALA
+ *      Baha eddine Bouchikhi
+ *      Ismail KHERBACH
+ *      Youness MIMENE
+ * 
+ * Test A 
+ *      Score 2
+ *      time 0min 0s 1 ms 
+ * 
+ ***/
 #include <bits/stdc++.h>
 using namespace std;
 #define INF 99999999
@@ -99,8 +111,8 @@ int main(){
     cerr<<"Read from file ..."<<endl;
     readFile("inputs/a_example.txt");
     solve();
-    cerr<<"writing sur file outputs/A ..."<<endl;
-    writeAlbum("outputs/A");
+    cerr<<"writing sur file outputs/A.txt ..."<<endl;
+    writeAlbum("outputs/A.txt");
     cerr<<"end trait test A"<<endl;
     cerr<<"********** score is "<<alb.score<<" ************"<<endl;
     difference1 = get_time_in_ms() - current_time;

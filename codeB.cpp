@@ -1,10 +1,21 @@
+/***
+ * Team codebreak
+ *      Lahcene CHAKLALA
+ *      Baha eddine Bouchikhi
+ *      Ismail KHERBACH
+ *      Youness MIMENE
+ * 
+ * Test B 
+ *      Score 1807
+ *      time 0min 11s 179 ms
+ * 
+ ***/
 #include <bits/stdc++.h>
 using namespace std;
 #define INF 99999999
 typedef vector<int> TypeTags;
 int bestMaxTest=1000;
 // vector adj for test B
-vector<vector<int>> adj;
 vector<set<int>> adjIndex;
 // list photo format du file
 vector<pair<char,vector<string>>> listPhoto;
@@ -101,8 +112,8 @@ int main(){
     cerr<<"Read from file ..."<<endl;
     readFile("inputs/b_lovely_landscapes.txt");
     solve2();
-    cerr<<"writing sur file outputs/B ..."<<endl;
-    writeAlbum("outputs/B");
+    cerr<<"writing sur file outputs/B.txt ..."<<endl;
+    writeAlbum("outputs/B.txt");
     cerr<<"end trait test B"<<endl;
     cerr<<"********** score is "<<alb.score<<" ************"<<endl;
     difference1 = get_time_in_ms() - current_time;
@@ -333,7 +344,7 @@ void solve2(){
             sort(indexPhotosH.begin()+i+1,indexPhotosH.end(),comparPhotoInter);
         }
     }
-    cerr<<"create Album ..."<<endl;
+    cerr<<endl<<"create Album ..."<<endl;
     vector<int> inversePath(numberPhotos,-2),finPath;
     for(int i=0;i<numberPhotos;i++){
         if(path[i]==-1){

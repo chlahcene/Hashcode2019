@@ -1,3 +1,15 @@
+/***
+ * Team codebreak
+ *      Lahcene CHAKLALA
+ *      Baha eddine Bouchikhi
+ *      Ismail KHERBACH
+ *      Youness MIMENE
+ * 
+ * Test C 
+ *      Score 1807
+ *      time 0min 11s 179 ms
+ * 
+ ***/
 #include <bits/stdc++.h>
 using namespace std;
 #define INF 99999999
@@ -96,8 +108,8 @@ int main(){
     cerr<<"Read from file ..."<<endl;
     readFile("inputs/c_memorable_moments.txt");
     solve();
-    cerr<<"writing sur file outputs/C ..."<<endl;
-    writeAlbum("outputs/C");
+    cerr<<"writing sur file outputs/C.txt ..."<<endl;
+    writeAlbum("outputs/C.txt");
     cerr<<"end trait test C"<<endl;
     cerr<<"********** score is "<<alb.score<<" ************"<<endl;
     difference1 = get_time_in_ms() - current_time;
