@@ -6,8 +6,8 @@
  *      Youness MIMENE
  * 
  * Test D 
- *      Score 1807
- *      time 0min 11s 179 ms
+ *      Score 440944
+ *      time 27min 11s 179 ms
  * 
  ***/
 #include <bits/stdc++.h>
@@ -59,6 +59,7 @@ struct slideshow{
         index1 = ph.index;
     };
     slideshow(photo &ph1,photo &ph2){
+        if(ph1.type!='V' || ph2.type!='V') exit(-1);
         tags = unionVector(ph1.tags,ph2.tags);
         index2 = ph2.index;
         index1 = ph1.index;
@@ -204,8 +205,8 @@ int interest(TypeTags &s1,TypeTags &s2){
      * interest entre s1 et s2
      **/
     int inter = lenghtIntersection(s1,s2);
-    int sizeS1=int(s1.size());
-    int sizeS2=int(s2.size());
+    int sizeS1=int(s1.count());
+    int sizeS2=int(s2.count());
     return min<int>({sizeS1-inter,sizeS1-inter,inter});
 }
 void createPhotos(){
@@ -251,7 +252,7 @@ void solve(){
         // add first photos H
         slides[left] = slideshow(photos[indexPhotosH[0]]);
         // on a utiliser photo H
-        notUseIndexH.erase(notUseIndexH.begin());
+        notUseIndexH.erase(0);
     }else{
         int minPenality = INF;
         int indexPhoto = -1;
@@ -266,7 +267,7 @@ void solve(){
         }
         slides[left] = slideshow(photos[indexPhotosV[indexPhoto]],photos[indexPhotosV[0]]);
         notUseIndexV.erase(indexPhoto);
-        notUseIndexV.erase(notUseIndexV.begin());
+        notUseIndexV.erase(0);
     }
     cerr<<fixed<<setprecision(2);    
     for(int i=1;i<numberSlides;i++){
@@ -462,18 +463,19 @@ void solve1(){
                 }
             }            
         } 
-        if(isV){
-            notUseIndexV.erase(indexPhoto);
-            notUseIndexV.erase(indexPhoto2);
-        }else{
-            notUseIndexH.erase(indexPhoto);
-        }
         if(isleft){
             // left
             left--;
         }else{
             // right
             right ++;
+        }
+
+        if(isV){
+            notUseIndexV.erase(indexPhoto);
+            notUseIndexV.erase(indexPhoto2);
+        }else{
+            notUseIndexH.erase(indexPhoto);
         }
     }
     cerr<<endl<<"create Album ..."<<endl;

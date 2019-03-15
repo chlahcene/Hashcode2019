@@ -6,15 +6,14 @@
  *      Youness MIMENE
  * 
  * Test B 
- *      Score 1807
- *      time 0min 11s 179 ms
+ *      Score 238434
+ *      time 30min 11s 179 ms
  * 
  ***/
 #include <bits/stdc++.h>
 using namespace std;
 #define INF 99999999
 typedef vector<int> TypeTags;
-int bestMaxTest=1000;
 // vector adj for test B
 vector<set<int>> adjIndex;
 // list photo format du file
@@ -25,7 +24,6 @@ void writeAlbum(const char namefile[]);
 map<string,int> ensembleTags;
 void initHache();
 int hacher(string s);
-TypeTags unionVector(TypeTags &V1,TypeTags &V2);
 int lenghtIntersection(TypeTags &V1,TypeTags &V2);
 int interest(TypeTags &s1,TypeTags &s2);
 // struct photo
@@ -49,60 +47,24 @@ struct photo{
 vector<photo> photos;
 vector<int> indexPhotosH,indexPhotosV;
 void createPhotos();
-bool comparPhotoSize(int i,int j);
 bool comparPhotoInter(int i,int j);
-// struct slideshow
-struct slideshow{
-    // 2 V or H
-    TypeTags tags;
-    int index1=-1;
-    int index2=-1;
-    slideshow(){};
-    slideshow(photo &ph){
-        tags = ph.tags;
-        index1 = ph.index;
-    };
-    slideshow(photo &ph1,photo &ph2){
-        tags = unionVector(ph1.tags,ph2.tags);
-        index2 = ph2.index;
-        index1 = ph1.index;
-    };    
-    void add(photo &ph){
-        tags = unionVector(tags,ph.tags);
-        index2 = ph.index;
-    }
-};
 // struct album
 struct album{
     // album et son score
     vector<pair<int,int>> index;
     int score=0;
     album(){};
-    album(vector<slideshow> &slides,int start,int end){
-        assert(start<=end);
-        for(int i=start;i<=end;i++){
-            if(i!=start){
-                score += interest(slides[i-1].tags,slides[i].tags);
-            }
-            if(slides[i].index2!=-1){
-                index.push_back({slides[i].index1,slides[i].index2});
-            }else{
-                index.push_back({slides[i].index1,-1});
-            }
-        }
-    }
     void addIndex(int ind){
         index.push_back({ind,-1});
         int sz=index.size();
         if(sz>1){
-            score+=interest(photos[ind].tags,photos[sz-2].tags);
+            score+=interest(photos[ind].tags,photos[index[sz-2].first].tags);
         }
     }
 };
 // album
 album alb;
 void solve2();
-int penality(slideshow &s1,slideshow &s2);
 inline unsigned long long get_time_in_ms();
 int main(){
     unsigned long long current_time, difference1;
@@ -188,58 +150,11 @@ void initHache(){
 int hacher(string s){
     return ensembleTags[s];
 }
-bool comparPhotoSize(int i,int j){
-    /**
-     * comparison selon size of tags
-     **/
-    return (listPhoto[i].second).size()<(listPhoto[j].second).size();
-}
 bool comparPhotoInter(int i,int j){
     /**
      * comparison selon size of tags
      **/
     return (adjIndex[i]).size()<(adjIndex[j]).size();
-}
-TypeTags unionVector(TypeTags &V1,TypeTags &V2){
-    /**
-     * V1 and V2 doit etre trie
-     * V1 and V2 est set des element sans doublan
-     * return union entre V1 and V2
-     **/
-    // number of element V1
-    int numberV1=V1.size();
-    // number of element V2
-    int numberV2=V2.size();
-    TypeTags res(numberV1+numberV2);
-    int indexV1=0,indexV2=0,numberRes=0;
-    while(indexV1<numberV1 && indexV2<numberV2){
-        if(V1[indexV1]==V2[indexV2]){
-            res[numberRes] = V1[indexV1];
-            numberRes++;
-            indexV2++;
-            indexV1++;
-        }else if(V1[indexV1]<V2[indexV2]){
-            res[numberRes] = V1[indexV1];
-            numberRes++;
-            indexV1++;
-        }else{
-            res[numberRes] = V2[indexV2];
-            numberRes++;
-            indexV2++;            
-        }
-    }
-    while(indexV1<numberV1){
-        res[numberRes] = V1[indexV1];
-        numberRes++;
-        indexV1++;        
-    }
-    while(indexV2<numberV2){
-        res[numberRes] = V2[indexV2];
-        numberRes++;
-        indexV2++;        
-    }
-    res.resize(numberRes);
-    return res;
 }
 int lenghtIntersection(TypeTags &V1,TypeTags &V2){
     /**
@@ -290,9 +205,6 @@ void createPhotos(){
     }
 
 }
-int penality(slideshow &s1,slideshow &s2){
-    return -1*interest(s1.tags,s2.tags);
-}
 inline unsigned long long get_time_in_ms(){
     return (unsigned long long)((double(clock()) / CLOCKS_PER_SEC) * 1000);
 }
@@ -338,7 +250,7 @@ void solve2(){
             int k=v[0];
             path[j] = k;
             adjIndex[k].erase(j);
-            for(int ii=i+1;ii<numberPhotos;ii++){
+            for(int ii=0;ii<numberPhotos;ii++){
                 adjIndex[indexPhotosH[ii]].erase(k);
             }
             sort(indexPhotosH.begin()+i+1,indexPhotosH.end(),comparPhotoInter);
