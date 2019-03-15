@@ -6,7 +6,7 @@
  *      Youness MIMENE
  * 
  * Test E 
- *      Score 561901
+ *      Score 561020
  *      time 29min 11s 179 ms
  * 
  ***/
@@ -257,7 +257,7 @@ void solve1(){
         // add first photo V
         for(int j:notUseIndexV){
             if(j==0) continue;
-            int p = lenghtIntersection(photos[indexPhotosV[0]].tags,photos[indexPhotosV[j]].tags);
+            int p = -1*interest(photos[indexPhotosV[0]].tags,photos[indexPhotosV[j]].tags);
             if(p<minPenality){
                 indexPhoto = j;
                 minPenality = p;

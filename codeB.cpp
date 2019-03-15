@@ -154,7 +154,7 @@ bool comparPhotoInter(int i,int j){
     /**
      * comparison selon size of tags
      **/
-    return (adjIndex[i]).size()<(adjIndex[j]).size();
+    return ((adjIndex[i]).size()<(adjIndex[j]).size() || ((adjIndex[i]).size()==(adjIndex[j]).size() && i<j));
 }
 int lenghtIntersection(TypeTags &V1,TypeTags &V2){
     /**
