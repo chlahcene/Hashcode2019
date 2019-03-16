@@ -1,3 +1,9 @@
+"""
+Test D
+Time : 44min (Pypy)
+Score : 440748
+"""
+
 # input files
 file = ["a_example.txt", "b_lovely_landscapes.txt", "c_memorable_moments.txt", "d_pet_pictures.txt",
         "e_shiny_selfies.txt"]
