@@ -10,11 +10,11 @@ TEAM MEMEBERS :
 
 
 
- *  SCORES : 
+ # SCORES : 
  *    A 2
  *    B 238434
  *    C 1797
  *    D 440748
  *    E 561901
- TOTAL : 1 242 882
+ * TOTAL : 1 242 882
  
