@@ -7,7 +7,7 @@
  * 
  * Test E 
  *      Score 561020
- *      time 29min 11s 179 ms
+ *      Time 29min 11s 179 ms
  * 
  ***/
 #include <bits/stdc++.h>
@@ -15,11 +15,11 @@ using namespace std;
 #define INF 99999999
 typedef bitset<500> TypeTags;
 int bestMaxTest=1;
-// list photo format du file
+// list photo of the file
 vector<pair<char,vector<string>>> listPhoto;
 void readFile(const char namefile[]);
 void writeAlbum(const char namefile[]);
-// hacher ensemble tags 
+// hacher set of tags 
 map<string,int> ensembleTags;
 void initHache();
 int hacher(string s);
@@ -28,13 +28,13 @@ int lenghtIntersection(TypeTags &V1,TypeTags &V2);
 int interest(TypeTags &s1,TypeTags &s2);
 // struct photo
 struct photo{
-    // list des tags
+    // list of tags
     TypeTags tags;
     int index;
     char type;
     photo(){};
     photo (int nIndex,char nType,vector<string> &nTags){
-        // l'ensemble du tags doit etre inithiliser pour hacher
+        // set of tags must be initialised for hashing
         index = nIndex;
         type = nType;
         for(string s:nTags){
@@ -42,7 +42,7 @@ struct photo{
         }
     }
 };
-// list des photos horizontal vertical
+// list of photos horizontal vertical
 vector<photo> photos;
 vector<int> indexPhotosH,indexPhotosV;
 void createPhotos();
@@ -70,7 +70,7 @@ struct slideshow{
 };
 // struct album
 struct album{
-    // album et son score
+    // album and score
     vector<pair<int,int>> index;
     int score=0;
     album(){};
@@ -123,7 +123,7 @@ int main(){
 }
 void readFile(const char namefile[]){
     /** 
-     * read from file and save sur @listPhoto 
+     * read from file and save in @listPhoto 
      ***/
   ifstream file;
   file.open (namefile);
@@ -149,7 +149,7 @@ void readFile(const char namefile[]){
 }
 void writeAlbum(const char namefile[]){
     /** 
-     * write @alb sur file **/
+     * write @alb in file **/
     ofstream file;
     file.open (namefile);
     if (file.is_open()){
@@ -169,7 +169,7 @@ void writeAlbum(const char namefile[]){
 }
 void initHache(){
     /** 
-     * donner a all the tags un key unique
+     * give to all the tags a unique key
      **/
     ensembleTags.clear();
     int key=0;
@@ -187,7 +187,7 @@ int hacher(string s){
 }
 bool comparPhotoSize(int i,int j){
     /**
-     * comparison selon size of tags
+     * comparison according to size of tags
      **/
     return (listPhoto[i].second).size()<(listPhoto[j].second).size();
 }
@@ -200,7 +200,7 @@ int lenghtIntersection(TypeTags &V1,TypeTags &V2){
 }
 int interest(TypeTags &s1,TypeTags &s2){
     /**
-     * interest entre s1 et s2
+     * interest between s1 and s2
      **/
     int inter = lenghtIntersection(s1,s2);
     int sizeS1=int(s1.count());
@@ -209,7 +209,7 @@ int interest(TypeTags &s1,TypeTags &s2){
 }
 void createPhotos(){
     /**
-     * creer photo from data de file
+     * create photo from data of file
      **/
     photos.clear();
     indexPhotosH.clear();
@@ -229,10 +229,10 @@ inline unsigned long long get_time_in_ms(){
 }
 void solve1(){
     initHache();
-    // creer des photos from donnes de file
+    // create photos from data of file
     cerr<<"Creer Photos ..."<<endl;
     createPhotos();
-    // sort list Photos selon number de tags
+    // sort list Photos according to number of tags
     cerr<<"Sort Listes Photos ..."<<endl;
     sort(indexPhotosH.begin(),indexPhotosH.end(),comparPhotoSize);
     sort(indexPhotosV.begin(),indexPhotosV.end(),comparPhotoSize);
@@ -240,7 +240,7 @@ void solve1(){
     // number of the slides
     int numberPhotoH=indexPhotosH.size(),numberPhotoV=indexPhotosV.size();
     int numberSlides=numberPhotoH+numberPhotoV/2;
-    // vector for les slides , 2*numberSlides pour que on peut ajout left et a right
+    // vector for the slides , 2*numberSlides to have the possibility to add from left and right
     vector<slideshow> slides(2*numberSlides);
     set<int> notUseIndexH,notUseIndexV;
     for(int i=0;i<numberPhotoH;i++) notUseIndexH.insert(i);
@@ -249,7 +249,7 @@ void solve1(){
     if(indexPhotosH.size()>0){
         // add first photos H
         slides[left] = slideshow(photos[indexPhotosH[0]]);
-        // on a utiliser photo H
+        // we have used photo H
         notUseIndexH.erase(0);
     }else{
         int minPenality = INF;
@@ -270,7 +270,7 @@ void solve1(){
     cerr<<fixed<<setprecision(2);    
     for(int i=1;i<numberSlides;i++){
         cerr<<"\r"<<(i+1)*100/double(numberSlides)<<"%";
-        // inithilser penality a infinity
+        // initialize penality to infinity
         int minPenality = INF;
         int indexPhoto = -1,indexPhoto2 = -1;
         bool isleft = false;
