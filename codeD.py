@@ -9,7 +9,6 @@ file = ["a_example.txt", "b_lovely_landscapes.txt", "c_memorable_moments.txt", "
         "e_shiny_selfies.txt"]
 # output files
 o = ["a", 'b', 'c', 'd', "e"]
-# for each file :
 ll = 3 #file D
 
 # reading of the file
