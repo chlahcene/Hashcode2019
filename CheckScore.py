@@ -5,8 +5,8 @@ if Pr.upper() in ['A' , 'B' , 'C' , 'D' , 'E'] :
 
     out = input("Enter the output file : ")
 
-    file = {'A':"a_example.txt", 'B' : "b_lovely_landscapes.txt",'C':"c_memorable_moments.txt","D":"d_pet_pictures.txt",
-            "E":"e_shiny_selfies.txt"}
+    file = {'A':"inputs/a_example.txt", 'B' : "inputs/b_lovely_landscapes.txt",'C':"inputs/c_memorable_moments.txt","D":"inputs/d_pet_pictures.txt",
+            "E":"inputs/e_shiny_selfies.txt"}
 
     f = open(file[Pr.upper()], "r")
 
@@ -36,7 +36,7 @@ if Pr.upper() in ['A' , 'B' , 'C' , 'D' , 'E'] :
         return min(n, len(a) - n, len(b) - n)
     stop = False
     try:
-        f= open(out , 'r')
+        f= open("outputs/"+out , 'r')
 
         s = f.read().split("\n")
         slides = []

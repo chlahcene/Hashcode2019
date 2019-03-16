@@ -1,5 +1,6 @@
-
-outputs/*.txt
-inputs/*.txt
-*.pdf
 main
+codeAC
+codeB
+codeD
+codeE
+.vscode/*
