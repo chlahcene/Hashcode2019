@@ -3,7 +3,7 @@
  *      Lahcene CHAKLALA
  *      Baha eddine Bouchikhi
  *      Ismail KHERBACH
- *      Youness MIMENE
+ *      Younes MIMENE
  * 
  * Test E 
  *      Score 561020
@@ -19,7 +19,7 @@ int bestMaxTest=1;
 vector<pair<char,vector<string>>> listPhoto;
 void readFile(const char namefile[]);
 void writeAlbum(const char namefile[]);
-// hacher set of tags 
+// hash set of tags 
 map<string,int> ensembleTags;
 void initHache();
 int hacher(string s);
@@ -34,7 +34,7 @@ struct photo{
     char type;
     photo(){};
     photo (int nIndex,char nType,vector<string> &nTags){
-        // set of tags must be initialised for hashing
+        // set of tags must be initialized for hashing
         index = nIndex;
         type = nType;
         for(string s:nTags){
@@ -108,7 +108,7 @@ int main(){
     cerr<<"Read from file ..."<<endl;
     readFile("inputs/e_shiny_selfies.txt");
     solve1();
-    cerr<<"writing sur file outputs/E.txt ..."<<endl;
+    cerr<<"writing in file outputs/E.txt ..."<<endl;
     writeAlbum("outputs/E.txt");
     cerr<<"end trait test E"<<endl;
     cerr<<"********** score is "<<alb.score<<" ************"<<endl;
@@ -187,7 +187,7 @@ int hacher(string s){
 }
 bool comparPhotoSize(int i,int j){
     /**
-     * comparison according to size of tags
+     * comparison according to the size of tags
      **/
     return (listPhoto[i].second).size()<(listPhoto[j].second).size();
 }
@@ -249,7 +249,7 @@ void solve1(){
     if(indexPhotosH.size()>0){
         // add first photos H
         slides[left] = slideshow(photos[indexPhotosH[0]]);
-        // we have used photo H
+        // we used photo H
         notUseIndexH.erase(0);
     }else{
         int minPenality = INF;
