@@ -16,11 +16,11 @@ using namespace std;
 typedef vector<int> TypeTags;
 // vector adj for test B
 vector<set<int>> adjIndex;
-// list photo format du file
+// list photo format of file
 vector<pair<char,vector<string>>> listPhoto;
 void readFile(const char namefile[]);
 void writeAlbum(const char namefile[]);
-// hacher ensemble tags 
+// hacher set of tags 
 map<string,int> ensembleTags;
 void initHache();
 int hacher(string s);
@@ -28,13 +28,13 @@ int lenghtIntersection(TypeTags &V1,TypeTags &V2);
 int interest(TypeTags &s1,TypeTags &s2);
 // struct photo
 struct photo{
-    // list des tags
+    // list of tags
     TypeTags tags;
     int index;
     char type;
     photo(){};
     photo (int nIndex,char nType,vector<string> &nTags){
-        // l'ensemble du tags doit etre inithiliser pour hacher
+        // set of tags must be initialised to be hashed
         index = nIndex;
         type = nType;
         for(string s:nTags){
@@ -43,14 +43,14 @@ struct photo{
         sort(tags.begin(),tags.end());
     }
 };
-// list des photos horizontal vertical
+// list of photos horizontal vertical
 vector<photo> photos;
 vector<int> indexPhotosH,indexPhotosV;
 void createPhotos();
 bool comparPhotoInter(int i,int j);
 // struct album
 struct album{
-    // album et son score
+    // album and score
     vector<pair<int,int>> index;
     int score=0;
     album(){};
@@ -114,7 +114,7 @@ void readFile(const char namefile[]){
 }
 void writeAlbum(const char namefile[]){
     /** 
-     * write @alb sur file **/
+     * write @alb in file **/
     ofstream file;
     file.open (namefile);
     if (file.is_open()){
@@ -134,7 +134,7 @@ void writeAlbum(const char namefile[]){
 }
 void initHache(){
     /** 
-     * donner a all the tags un key unique
+     * give a all the tags a unique key
      **/
     ensembleTags.clear();
     int key=0;
@@ -152,15 +152,15 @@ int hacher(string s){
 }
 bool comparPhotoInter(int i,int j){
     /**
-     * comparison selon size of tags
+     * comparison according to size of tags
      **/
     return ((adjIndex[i]).size()<(adjIndex[j]).size() || ((adjIndex[i]).size()==(adjIndex[j]).size() && i<j));
 }
 int lenghtIntersection(TypeTags &V1,TypeTags &V2){
     /**
-     * V1 and V2 doit etre trie
-     * V1 and V2 est set des element sans doublan
-     * return lenght of intersection entre V1 and V2
+     * V1 and V2 must be sorted
+     * V1 and V2 are sets of elements without duplicates
+     * return lenght of intersection between V1 and V2
      **/
     // lengh of intersection
     int res=0;
@@ -184,7 +184,7 @@ int lenghtIntersection(TypeTags &V1,TypeTags &V2){
 }
 int interest(TypeTags &s1,TypeTags &s2){
     /**
-     * interest entre s1 et s2
+     * interest between s1 and s2
      **/
     int inter = lenghtIntersection(s1,s2);
     int sizeS1=int(s1.size());
@@ -193,7 +193,7 @@ int interest(TypeTags &s1,TypeTags &s2){
 }
 void createPhotos(){
     /**
-     * creer photo from data de file
+     * create photo from data of file
      **/
     photos.clear();
     indexPhotosH.clear();
@@ -211,10 +211,10 @@ inline unsigned long long get_time_in_ms(){
 void solve2(){
     // for test B
     initHache();
-    // creer des photos from donnes de file
+    // create photos from data of file
     cerr<<"Creer Photos ..."<<endl;
     createPhotos();
-    // create ensemble from the tags
+    // create set from the tags
     int numberTags = ensembleTags.size();
     vector<vector<int>> ensemblePhotos(numberTags);
     for(int i:indexPhotosH){
