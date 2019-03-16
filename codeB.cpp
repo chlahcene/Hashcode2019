@@ -3,11 +3,11 @@
  *      Lahcene CHAKLALA
  *      Baha eddine Bouchikhi
  *      Ismail KHERBACH
- *      Youness MIMENE
+ *      Younes MIMENE
  * 
  * Test B 
  *      Score 238434
- *      time 30min 11s 179 ms
+ *      Time 30min 11s 179 ms
  * 
  ***/
 #include <bits/stdc++.h>
@@ -16,11 +16,11 @@ using namespace std;
 typedef vector<int> TypeTags;
 // vector adj for test B
 vector<set<int>> adjIndex;
-// list photo format of file
+// list photo of file
 vector<pair<char,vector<string>>> listPhoto;
 void readFile(const char namefile[]);
 void writeAlbum(const char namefile[]);
-// hacher set of tags 
+// hash set of tags 
 map<string,int> ensembleTags;
 void initHache();
 int hacher(string s);
@@ -34,7 +34,7 @@ struct photo{
     char type;
     photo(){};
     photo (int nIndex,char nType,vector<string> &nTags){
-        // set of tags must be initialised to be hashed
+        // set of tags must be initialized to be hashed
         index = nIndex;
         type = nType;
         for(string s:nTags){
@@ -88,7 +88,7 @@ int main(){
 }
 void readFile(const char namefile[]){
     /** 
-     * read from file and save sur @listPhoto 
+     * read from file and save in @listPhoto 
      ***/
   ifstream file;
   file.open (namefile);
@@ -134,7 +134,7 @@ void writeAlbum(const char namefile[]){
 }
 void initHache(){
     /** 
-     * give a all the tags a unique key
+     * give to all the tags a unique key
      **/
     ensembleTags.clear();
     int key=0;
@@ -235,7 +235,7 @@ void solve2(){
     for(int i=0;i<numberPhotos;i++){
         (adjIndex[i]).erase(i);
     }
-    // sort list Photos selon number de tags
+    // sort list Photos according to the number of tags
     cerr<<"Sort Listes Photos ..."<<endl;
     sort(indexPhotosH.begin(),indexPhotosH.end(),comparPhotoInter);
     cerr<<"Choice the Slides ..."<<endl;
