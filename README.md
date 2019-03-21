@@ -1,4 +1,4 @@
-# Hashcode2019
+# Hash Code 2019 solution
 # Welcome !
 This is the solution proposed by Codebreak team (GDG Algiers HUB) for the qualification round of Hash Code competition 2019!
 TEAM MEMEBERS :
