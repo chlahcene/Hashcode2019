@@ -2,7 +2,7 @@
 # Welcome !
 This is the solution proposed by Codebreak team (GDG Algiers HUB) for the qualification round of Hash Code competition 2019!
 TEAM MEMEBERS :
-- Chaklala Lahcene
+- [Chaklala Lahcene](https://github.com/chlahcene)
 - [Mimene Younes](https://github.com/younes38)
 - Ismail KHERBACH
 - Baha eddine Bouchikhi
